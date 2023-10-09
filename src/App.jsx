@@ -1,14 +1,19 @@
 import './App.css'
-import Button from '@mui/material/Button';
-import NavBar from './components/NavBar/NavBar';
+import Home from './components/Home/Home'
+import Login from './components/Login/Login'
+import {Routes, Route, BrowserRouter} from "react-router-dom"
 
 function App() {
   
   return (
     <>
-      <NavBar/>
-      <h1>Hello World</h1>
-      <Button variant="contained">Click Me</Button>
+    <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Login/>} />
+       <Route path="/home" element={<Home/>}/>
+    </Routes>
+    </BrowserRouter>
+      
     </>
   )
 }

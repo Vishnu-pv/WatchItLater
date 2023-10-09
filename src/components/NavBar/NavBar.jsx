@@ -13,9 +13,12 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import './NavBar.css'
+import { useAuth } from '../../firebase'
+
 
 //const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const { isLoggedIn, logout } = useAuth();
 
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -32,9 +35,16 @@ function NavBar() {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (setting) => {
     setAnchorElUser(null);
+    if(setting === 'Logout'){
+      logout()
+    }else{
+      console.log(setting)
+    }
+    
   };
+
 
   return (
     <AppBar>
@@ -49,7 +59,7 @@ function NavBar() {
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
+              fontFamily: 'Sanchez',
               fontWeight: 700,
               letterSpacing: '.3rem',
               color: 'inherit',
@@ -105,9 +115,8 @@ function NavBar() {
               mr: 2,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
-              fontFamily: 'monospace',
+              fontFamily: 'Sanchez',
               fontWeight: 700,
-              letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
@@ -149,7 +158,7 @@ function NavBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

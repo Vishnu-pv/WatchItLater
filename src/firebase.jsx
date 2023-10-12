@@ -13,25 +13,12 @@ const firebaseConfig = {
     measurementId: "G-DYDWTR9G03"
   };
 
-
-
-
-const AuthContext = createContext();
-
-export function useAuth() {
-  return useContext(AuthContext);
-}
-
 export const app = initializeApp(firebaseConfig)
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-export function AuthProvider({ children }) {
-
-const [isLoggedIn, setIsLoggedIn] = useState(false);
-
 const googleProvider = new GoogleAuthProvider();
-const signInWithGoogle = async () => {
+export const signInWithGoogle = async () => {
   try {
     const res = await signInWithPopup(auth, googleProvider);
     const user = res.user;
@@ -45,21 +32,8 @@ const signInWithGoogle = async () => {
         email: user.email,
       });
     }
-    setIsLoggedIn(true)
   } catch (err) {
     console.error(err);
     alert(err.message);
   }
-};
-
-const logout = () => {
-    signOut(auth);
-    setIsLoggedIn(false)
-  };
-
-  return (
-    <AuthContext.Provider value={{ isLoggedIn, signInWithGoogle, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
-  }
+}

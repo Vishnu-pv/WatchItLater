@@ -1,22 +1,41 @@
 import { Container } from '@mui/material'
 import React from 'react'
 import Button from '@mui/material/Button';
-import { useAuth } from '../../firebase'
 import { useNavigate} from 'react-router-dom';
 import { useEffect } from 'react';
 import {useAuthState} from 'react-firebase-hooks/auth'
-import { auth } from '../../firebase';
+import { useUserAuth } from '../context/UserAuthContext';
 
-function Login() {
-    const { signInWithGoogle } = useAuth();
-    const handleLogin = () => {
-        signInWithGoogle()
+const Login = () => {
+    const { signIn,user } = useUserAuth()
+    const navigate = useNavigate()
+    useEffect(()=>{
+      if(user){
+        navigate("/home")
+      }
+    },[user])
+    const handleLogin = async () => {
+      try{
+        console.log(user)
+        if(user) {
+          navigate("/home")
+        }else{
+          await signIn()
+        }
+       
+        console.log(user)
+      
+      }catch(err){
+          console.error(err)
+      }
     }
   return (
-    <>
-        <Container>
-            <Button onClick={handleLogin}>Login</Button>
-        </Container>
+    <>{
+      <Container>
+      <Button onClick={handleLogin}>Login</Button>
+  </Container>
+    }
+     
     </>
   )
 }

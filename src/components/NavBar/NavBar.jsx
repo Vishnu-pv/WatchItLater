@@ -13,14 +13,27 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import './NavBar.css'
-import { useAuth } from '../../firebase'
+import { useUserAuth } from '../context/UserAuthContext';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 
 //const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-const { isLoggedIn, logout } = useAuth();
+// const { logOut } = useUserAuth()
 
 function NavBar() {
+
+  const navigate = useNavigate()
+  const { signIn,user,logOut } = useUserAuth()
+  useEffect(() => {
+
+    if(!user){
+      navigate("/")
+    }
+
+  },[user])
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -38,15 +51,14 @@ function NavBar() {
   const handleCloseUserMenu = (setting) => {
     setAnchorElUser(null);
     if(setting === 'Logout'){
-      logout()
-    }else{
-      console.log(setting)
+        logOut()
     }
     
   };
 
 
   return (
+   
     <AppBar>
       <Container>
         <Toolbar disableGutters>
@@ -138,7 +150,7 @@ function NavBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp" src={user.photoURL} />
               </IconButton>
             </Tooltip>
             <Menu

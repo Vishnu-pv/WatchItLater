@@ -2,16 +2,26 @@ import SearchIcon from '@mui/icons-material/Menu';
 import {TextField,InputAdornment,Container} from '@mui/material';
 import axios from 'axios';
 import { useState,useEffect } from 'react';
+import SearchResults from './SearchResults';
 
 function SearchBar() {
   const [searchTerm,setSearchTerm] = useState('')
-  const [movie,setMovie] = useState([])
+  const [searchResults,setSearchResults] = useState([])
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      console.log(searchTerm)
-      handleSearch()
-      // Send Axios request here
+      if(searchTerm.length >= 3){
+        const apiUrl = `http://www.omdbapi.com/?apikey=7a708271&s=${searchTerm}`;
+        axios.get(apiUrl)
+        .then(res => {
+            setSearchResults(res.data.Search)
+        }).catch(err => {
+            console.error(err)
+        })
+  
+      }
+     
+     
     }, 3000)
 
     return () => clearTimeout(delayDebounceFn)
@@ -22,16 +32,7 @@ function SearchBar() {
     // Make your API request here using the `searchTerm` state
     // For example, you can use the fetch or Axios library.
     // Replace the URL with your API endpoint.
-    const apiUrl = `http://www.omdbapi.com/?apikey=7a708271&s=${searchTerm}`;
-    
-    await axios.get(apiUrl)
-    .then(res => {
-        console.log(res.data)
-        setMovie(res.data.Search)
-        console.log(movie)
-    }).catch(err => {
-        console.error(err)
-    })
+  
     
   };
 
@@ -45,11 +46,12 @@ function SearchBar() {
   return (
     <Container>
     <TextField
-      label="Search Movies"
+      label="Search"
       variant="outlined"
       value={searchTerm}
       onChange={handleChange}
     />
+    <SearchResults results={searchResults}/>
     </Container>
   );
 }

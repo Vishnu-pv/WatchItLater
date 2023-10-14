@@ -61,7 +61,7 @@ function NavBar() {
 
   return (
    
-    <AppBar>
+    <AppBar style={containerStyle}>
       <Container style={containerStyle}>
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />

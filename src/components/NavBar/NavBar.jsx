@@ -12,10 +12,11 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import './NavBar.css'
+import './NavBarStyle.js'
 import { useUserAuth } from '../context/UserAuthContext';
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { containerStyle } from './NavBarStyle.js';
 
 
 
@@ -24,13 +25,14 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 // const { logOut } = useUserAuth()
 
 function NavBar() {
-
+  const [photoUrl,setPhotoUrl] = useState('')
   const navigate = useNavigate()
   const { signIn,user,logOut } = useUserAuth()
   useEffect(() => {
-
     if(!user){
       navigate("/")
+    }else{
+      setPhotoUrl(user.photoURL)
     }
 
   },[user])
@@ -60,7 +62,7 @@ function NavBar() {
   return (
    
     <AppBar>
-      <Container>
+      <Container style={containerStyle}>
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
@@ -74,7 +76,7 @@ function NavBar() {
               fontFamily: 'Sanchez',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
+              color: 'black',
               textDecoration: 'none',
             }}
           >
@@ -129,7 +131,7 @@ function NavBar() {
               flexGrow: 1,
               fontFamily: 'Sanchez',
               fontWeight: 700,
-              color: 'inherit',
+              color: 'white',
               textDecoration: 'none',
             }}
           >
@@ -150,7 +152,7 @@ function NavBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src={user.photoURL} />
+                <Avatar alt="Remy Sharp" src={photoUrl} />
               </IconButton>
             </Tooltip>
             <Menu

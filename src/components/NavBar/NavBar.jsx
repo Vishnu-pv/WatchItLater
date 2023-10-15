@@ -29,12 +29,9 @@ function NavBar() {
   const navigate = useNavigate()
   const { signIn,user,logOut } = useUserAuth()
   useEffect(() => {
-    if(!user){
-      navigate("/")
-    }else{
+    if(user){
       setPhotoUrl(user.photoURL)
     }
-
   },[user])
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -60,7 +57,7 @@ function NavBar() {
 
 
   return (
-   
+
     <AppBar style={containerStyle}>
       <Container style={containerStyle}>
         <Toolbar disableGutters>
@@ -76,7 +73,7 @@ function NavBar() {
               fontFamily: 'Sanchez',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'black',
+              color: 'white',
               textDecoration: 'none',
             }}
           >

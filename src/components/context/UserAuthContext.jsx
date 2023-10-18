@@ -1,9 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react"
 import {
     signOut,
-    onAuthStateChanged,
-    signInWithPopup,
-    GoogleAuthProvider
+    onAuthStateChanged
 } from 'firebase/auth'
 import {auth, signInWithGoogle} from '../../firebase'
 

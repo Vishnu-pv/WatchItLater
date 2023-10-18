@@ -1,38 +1,35 @@
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import { Avatar } from '@mui/material';
+import { Avatar, Button, avatarClasses } from '@mui/material';
 import { headingStyle } from '../Login/LoginStyle';
-
+import StarIcon from '@mui/icons-material/Star';
+import { avatarStyle, paperStyle } from './SearchStyle';
+import { Suspense } from 'react';
 
 const SearchResults = ({ results }) => {
-    if (!results || results.length === 0) {
-        return (
-          <div>
-            <h2 style={headingStyle}>Search Results</h2>
-            <p style={headingStyle}>No results found.</p>
-          </div>
-        );
-    }
-
   return (
 <div>
   <h2 style={headingStyle}>Search Results</h2>
-  <Grid container spacing={3}>
+  <Grid container spacing={4}>
     {results.map((result, index) => (
-      <Grid item xs={12} sm={6} md={4} key={index}>
-        <Paper elevation={3} style={{display:'flex',flexDirection: 'column',alignItems:'center',justifyContent:'center', padding: '16px' }}>
-          
-          <Avatar alt={result.Title} src={result.Poster}    style={{ width: '200px', height: '250px', borderRadius: '20px' }} />
-         
-          <h3>{result.Title}</h3>
-          <p style={{fontWeight:700}}>Year: {result.Year}</p>
-          <p>Type:  {result.Type}</p>
+      <Grid item xs={12} sm={6} md={3} key={index} style={{width:'150px', padding: '15px 0px', display: 'flex', justifyContent: 'center'}}>
+        <Paper elevation={5} style={paperStyle}>
+          <Avatar style={avatarStyle} alt={result.Title} src={result.Poster}  />
+          <div>
+            <div>
+            <h4>{result.Title}</h4> 
+            <p style={{fontWeight:500}}>{result.Year}</p>
+            </div>
+            <div>
+            <p style={{fontWeight:500}}>{result.Type.toUpperCase()}</p>
+            <Button >Add to WatchList</Button>
+            </div>
+          </div>
         </Paper>
       </Grid>
     ))}
   </Grid>
 </div>
-
   )
 }
 

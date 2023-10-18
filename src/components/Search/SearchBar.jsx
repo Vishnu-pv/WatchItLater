@@ -1,27 +1,20 @@
 import SearchIcon from '@mui/icons-material/Menu';
-import {TextField,InputAdornment,Container} from '@mui/material';
+import {TextField,InputAdornment,Container, Typography} from '@mui/material';
 import axios from 'axios';
-import { useState,useEffect } from 'react';
+import { useState,useEffect, Suspense } from 'react';
 import SearchResults from './SearchResults';
 
 function SearchBar() {
   const [searchTerm,setSearchTerm] = useState('')
   const [searchResults,setSearchResults] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       if(searchTerm.length >= 3){
-        const apiUrl = `http://www.omdbapi.com/?apikey=7a708271&s=${searchTerm}`;
-        axios.get(apiUrl)
-        .then(res => {
-            setSearchResults(res.data.Search)
-        }).catch(err => {
-            console.error(err)
-        })
-  
+          handleSearch()
       }
-     
-     
     }, 3000)
 
     return () => clearTimeout(delayDebounceFn)
@@ -29,10 +22,16 @@ function SearchBar() {
 
    
   const handleSearch = async () => {
-    // Make your API request here using the `searchTerm` state
-    // For example, you can use the fetch or Axios library.
-    // Replace the URL with your API endpoint.
-  
+    setIsLoading(true)
+    const apiUrl = `http://www.omdbapi.com/?apikey=7a708271&s=${searchTerm}`;
+         await axios.get(apiUrl)
+        .then(res => {
+            setSearchResults(res.data.Search)
+        }).catch(err => {
+            console.error(err)
+        }).finally(()=>{
+          setIsLoading(false)
+        })
     
   };
 
@@ -50,8 +49,15 @@ function SearchBar() {
       variant="outlined"
       value={searchTerm}
       onChange={handleChange}
+      sx={{ width: 400 }}
     />
-    <SearchResults results={searchResults}/>
+   {
+    isLoading ? (
+      <Typography variant="h4">Loading...</Typography>
+    ): (
+      <SearchResults results={searchResults}/>
+    )
+   }
     </Container>
   );
 }

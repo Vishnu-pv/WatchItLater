@@ -6,6 +6,9 @@ import { useEffect } from 'react';
 import {useAuthState} from 'react-firebase-hooks/auth'
 import { useUserAuth } from '../context/UserAuthContext';
 import { buttonStyle, headingStyle } from './LoginStyle';
+import { motion, useAnimation } from 'framer-motion';
+import WaveAnimation from './WaveAnimation';
+import AnimatedTextCharacter from './WaveAnimation';
 
 const Login = () => {
     const { signIn,user } = useUserAuth()
@@ -17,7 +20,6 @@ const Login = () => {
     },[user])
     const handleLogin = async () => {
       try{
-        console.log(user)
         if(user) {
           navigate("/home")
         }else{
@@ -33,7 +35,7 @@ const Login = () => {
   return (
     <>{
       <Container>
-        <Typography gutterBottom color="primary" variant='h2' style={headingStyle}>Watch It Later</Typography>
+         <AnimatedTextCharacter text="Watch It Later"/>
         <Button variant="outlined" style={buttonStyle} onClick={handleLogin}>Sign In With Google</Button>
       </Container>
     }

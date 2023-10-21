@@ -3,6 +3,7 @@ import {TextField,InputAdornment,Container, Typography} from '@mui/material';
 import axios from 'axios';
 import { useState,useEffect, Suspense } from 'react';
 import SearchResults from './SearchResults';
+import Loader from '../../assets/Loader.svg?react'
 
 function SearchBar() {
   const [searchTerm,setSearchTerm] = useState('')
@@ -21,10 +22,9 @@ function SearchBar() {
   }, [searchTerm])
 
    
-  const handleSearch = async () => {
+const handleSearch = async () => {
     setIsLoading(true)
-    const apiUrl = `http://www.omdbapi.com/?apikey=7a708271&s=${searchTerm}`;
-         await axios.get(apiUrl)
+         await axios.get(`/api/data?searchTerm=${searchTerm}`)
         .then(res => {
             setSearchResults(res.data.Search)
         }).catch(err => {
@@ -42,7 +42,7 @@ function SearchBar() {
   }
 
 
-  return (
+return (
     <Container>
     <TextField
       label="Search"
@@ -53,7 +53,9 @@ function SearchBar() {
     />
    {
     isLoading ? (
-      <Typography variant="h4">Loading...</Typography>
+      <div>
+        <Loader/>
+      </div>
     ): (
       <SearchResults results={searchResults}/>
     )

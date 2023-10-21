@@ -5,8 +5,22 @@ import { headingStyle } from '../Login/LoginStyle';
 import StarIcon from '@mui/icons-material/Star';
 import { avatarStyle, paperStyle } from './SearchStyle';
 import { Suspense } from 'react';
+import { useUserAuth } from '../context/UserAuthContext';
+import { addToWatchList } from '../../firebase';
+
 
 const SearchResults = ({ results }) => {
+
+  const { signIn,user,logOut } = useUserAuth()
+  
+  const handleSave = async (result) => {
+    try{ 
+      addToWatchList(result,user.uid)
+    }catch(err){
+      console.error(err)
+    }
+  }
+
   return (
 <div>
   <h2 style={headingStyle}>Search Results</h2>
@@ -22,7 +36,7 @@ const SearchResults = ({ results }) => {
             </div>
             <div>
             <p style={{fontWeight:500}}>{result.Type.toUpperCase()}</p>
-            <Button >Add to WatchList</Button>
+            <Button onClick={() => handleSave(result)}>Add to WatchList</Button>
             </div>
           </div>
         </Paper>

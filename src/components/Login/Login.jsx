@@ -1,13 +1,9 @@
-import { Container, Typography } from '@mui/material'
-import React from 'react'
+import { Container } from '@mui/material'
+import React, {useEffect} from 'react'
 import Button from '@mui/material/Button';
-import { useNavigate} from 'react-router-dom';
-import { useEffect } from 'react';
-import {useAuthState} from 'react-firebase-hooks/auth'
+import {useNavigate} from 'react-router-dom';
 import { useUserAuth } from '../context/UserAuthContext';
-import { buttonStyle, headingStyle } from './LoginStyle';
-import { motion, useAnimation } from 'framer-motion';
-import WaveAnimation from './WaveAnimation';
+import { buttonStyle } from './LoginStyle';
 import AnimatedTextCharacter from './WaveAnimation';
 
 const Login = () => {

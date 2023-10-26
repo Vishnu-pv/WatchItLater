@@ -3,7 +3,7 @@ import Paper from '@mui/material/Paper';
 import { Avatar, Button, avatarClasses } from '@mui/material';
 import { headingStyle } from '../Login/LoginStyle';
 import StarIcon from '@mui/icons-material/Star';
-import { avatarStyle, paperStyle } from './SearchStyle';
+import { avatarStyle, container, paperStyle } from './SearchStyle';
 import { Suspense } from 'react';
 import { useUserAuth } from '../context/UserAuthContext';
 import { addToWatchList } from '../../firebase';
@@ -22,7 +22,7 @@ const SearchResults = ({ results }) => {
   }
 
   return (
-<div>
+<div style={container}>
   <h2 style={headingStyle}>Search Results</h2>
   <Grid container spacing={1} justifyContent="center" overflow="hidden">
     {results.map((result, index) => (

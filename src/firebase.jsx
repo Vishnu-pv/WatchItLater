@@ -1,7 +1,6 @@
-import {GoogleAuthProvider,getAuth,signInWithPopup,signOut} from "firebase/auth";
+import {GoogleAuthProvider,getAuth,signInWithPopup} from "firebase/auth";
 import {getFirestore,query,getDocs,collection,where,addDoc} from "firebase/firestore";
 import { initializeApp } from "firebase/app";
-import React, { createContext, useContext, useState } from 'react';
 import { firebaseConfig } from "./firebaseConfig";
 
 

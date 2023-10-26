@@ -7,7 +7,7 @@ import ProtectedRoute from './components/context/ProtectedRoute'
 import Movies from './components/Library/Movies'
 import Series from './components/Library/Series'
 import Others from './components/Library/Others'
-function App({pageProps}) {
+function App() {
   
   return (
     <>
